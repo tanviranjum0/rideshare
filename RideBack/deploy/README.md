@@ -70,10 +70,10 @@ Verify `tanvirdev.site` (or a subdomain) via the TXT/DKIM records Resend gives y
 
 ### GitHub Actions (CI/CD)
 
-RideBack and RideFront both live in one GitHub repo (`tanviranjum0/work`), alongside your other projects, at `github/ride/RideBack` and `github/ride/RideFront`. Only RideBack needs a workflow (Vercel deploys RideFront on its own git integration) — it lives at the repo root, `.github/workflows/rideback-deploy.yml` (GitHub never discovers workflows inside a subdirectory), and is path-filtered to `github/ride/RideBack/**` so pushes to your other projects don't trigger it.
+RideBack and RideFront both live in one GitHub repo (`tanviranjum0/quickride`). Only RideBack needs a workflow (Vercel deploys RideFront on its own git integration) — it lives at the repo root, `.github/workflows/rideback-deploy.yml` (GitHub never discovers workflows inside a subdirectory), and is path-filtered to `RideBack/**` so frontend-only pushes do not trigger it.
 
 1. On EC2, generate a deploy key pair (or reuse one) and add the **public** key to `~/.ssh/authorized_keys` for the deploy user.
-2. In the `tanviranjum0/work` repo → Settings → Secrets and variables → Actions, add:
+2. In the `tanviranjum0/quickride` repo → Settings → Secrets and variables → Actions, add:
    - `EC2_HOST` — the Elastic IP or `api.rideshare.tanvirdev.site`
    - `EC2_USER` — `ubuntu`
    - `EC2_SSH_KEY` — the **private** key from step 1
@@ -84,12 +84,12 @@ RideBack and RideFront both live in one GitHub repo (`tanviranjum0/work`), along
 
 ```bash
 # on the instance
-git clone https://github.com/tanviranjum0/work.git ~/work
-cd ~/work/github/ride/RideBack
+git clone https://github.com/tanviranjum0/quickride.git ~/quickride
+cd ~/quickride/RideBack
 sudo bash deploy/scripts/bootstrap-ec2.sh     # swap, Docker, unattended upgrades
 exit                                          # log back in so the docker group applies
 
-cd ~/work/github/ride/RideBack
+cd ~/quickride/RideBack
 cp .env.production.example .env.production
 chmod 600 .env.production
 nano .env.production                          # fill in every value, including GHCR_OWNER

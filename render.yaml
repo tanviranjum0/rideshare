@@ -1,11 +1,11 @@
 # Render Blueprint: free web service for the QuickRide API.
-# New > Blueprint > pick this repo, and set the Blueprint path to github/ride/render.yaml.
+# New > Blueprint > pick this repo, and leave the Blueprint path as render.yaml.
 services:
   - type: web
     name: quickride-api
     runtime: node
     plan: free
-    rootDir: github/ride/RideBack
+    rootDir: RideBack
     buildCommand: npm ci --omit=dev --no-audit --no-fund
     startCommand: node server.js
     healthCheckPath: /healthz
